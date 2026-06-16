@@ -9,6 +9,8 @@ export const LOG_TEMPLATES = {
   GAME_PAUSE: 'Game pause', GAME_RESUME: 'Game resume', GAME_OVER: 'Game over score={score}', LEADERBOARD_SAVE: 'Leaderboard save',
   LEADERBOARD_READ: 'Leaderboard read', ROUTE_ENTER: 'Route enter {path}', ERROR_BOUNDARY: 'Error {message}', CANVAS_READY: 'Canvas ready',
   PHASER_BOOT: 'Phaser boot', PHASER_SCENE_START: 'Phaser scene start', COMBAT_DAMAGE: 'Combat damage {value}', COMBAT_EXP: 'Combat exp {value}',
-  INVENTORY_CHANGE: 'Inventory change {count}', STATUS_RENDER: 'Status render', MINIMAP_RENDER: 'MiniMap render', PARTICLE_PLAY: 'Particle {key}'
+  INVENTORY_CHANGE: 'Inventory change {count}', STATUS_RENDER: 'Status render', MINIMAP_RENDER: 'MiniMap render', PARTICLE_PLAY: 'Particle {key}',
+  SKILL_CAST: 'Player casts [{skill}]', SKILL_DAMAGE: 'Skill [{skill}] deals {value} damage', SKILL_HEAL: 'Skill [{skill}] heals {value} HP',
+  SKILL_NO_MP: 'Not enough MP for [{skill}]', SKILL_COOLDOWN: 'Skill [{skill}] is on cooldown ({remaining}s)', SKILL_COOLDOWN_START: 'Skill [{skill}] cooldown started ({cooldown}s)'
 };
 

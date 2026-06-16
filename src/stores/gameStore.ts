@@ -1,1 +1,41 @@
-import { create } from 'zustand'; import { logGame } from '../utils/gameLogger'; export const useGameStore=create<{mode:'start'|'playing'|'paused'|'over'; score:number; tick:number; start:(name:string)=>void; pause:()=>void; over:()=>void; step:()=>void}>((set)=>({mode:'start',score:0,tick:0,start:(name)=>{logGame('GAME_START',{name}); set({mode:'playing',score:0,tick:0});},pause:()=>set((s)=>{logGame(s.mode==='paused'?'GAME_RESUME':'GAME_PAUSE'); return {mode:s.mode==='paused'?'playing':'paused'};}),over:()=>set((s)=>{logGame('GAME_OVER',{score:s.score}); return {mode:'over'};}),step:()=>set((s)=>({tick:s.tick+1,score:s.score+(s.mode==='playing'?1:0)}))}));
+import { create } from 'zustand';
+import { logGame } from '../utils/gameLogger';
+import { usePlayerStore } from './playerStore';
+
+export const useGameStore = create<{
+  mode: 'start' | 'playing' | 'paused' | 'over';
+  score: number;
+  tick: number;
+  start: (name: string) => void;
+  pause: () => void;
+  over: () => void;
+  step: () => void;
+}>((set) => ({
+  mode: 'start',
+  score: 0,
+  tick: 0,
+  start: (name) => {
+    logGame('GAME_START', { name });
+    set({ mode: 'playing', score: 0, tick: 0 });
+  },
+  pause: () =>
+    set((s) => {
+      logGame(s.mode === 'paused' ? 'GAME_RESUME' : 'GAME_PAUSE');
+      return { mode: s.mode === 'paused' ? 'playing' : 'paused' };
+    }),
+  over: () =>
+    set((s) => {
+      logGame('GAME_OVER', { score: s.score });
+      return { mode: 'over' };
+    }),
+  step: () =>
+    set((s) => {
+      if (s.mode === 'playing') {
+        usePlayerStore.getState().tickCooldowns();
+        if (s.tick % 5 === 0) {
+          usePlayerStore.getState().recoverMp(1);
+        }
+      }
+      return { tick: s.tick + 1, score: s.score + (s.mode === 'playing' ? 1 : 0) };
+    })
+}));
